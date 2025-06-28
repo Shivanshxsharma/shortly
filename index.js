@@ -7,8 +7,13 @@ const redirectRoutes = require("./routes/redirect");
 const home=require("./routes/homerouter");
 const cookieParser=require("cookie-parser"); // important 
 const { restrictToLoggedinUser } = require("./middlewares/restrictToLoggedinUser");
-connectmdb("mongodb://localhost:27017/shortly")
-  .then(() => console.log("Connected to MongoDB"));
+connectmdb(process.env.MONGO_URL)
+  .then(() => {
+    console.log("✅ MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false})); // Now it's actually used
