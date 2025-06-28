@@ -18,7 +18,7 @@ const shortId = nanoid(n);
         visithistory:[],
         createdBy:user.email,
     })
-req.session.shorturl = `http://localhost:8001/${shortId}`;
+req.session.shorturl = `https://shortly-jogp.onrender.com/${shortId}`;
 req.session.id = shortId;
 return res.redirect("/");
 
