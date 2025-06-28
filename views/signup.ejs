@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .signup-header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .signup-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-match-indicator {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .password-match-indicator.match {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .password-match-indicator.no-match {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 600px) {
+            .signup-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .signup-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>Sign Up</h1>
+            <p>Create your account to get started</p>
+        </div>
+
+        <form method="post" action="/signup" id="signupForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+            <small id="emailError" style="color: red; font-weight: 500;"></small>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password">Password</label>
+              <input type="password" id="password" name="password" required
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+             title="Minimum 8 characters, at least one letter, one number, and one special character." />
+             <small id="strengthMsg" style="color: #dc3545; font-weight: 500;"></small>
+
+
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="password-match-indicator" id="passwordMatchIndicator"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+    </div>
+
+    <script>
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const passwordMatchIndicator = document.getElementById('passwordMatchIndicator');
+        const form = document.getElementById('signupForm');
+
+        // Check password match function
+        function checkPasswordMatch() {
+            const passwordValue = password.value;
+            const confirmPasswordValue = confirmPassword.value;
+
+            console.log('Password:', passwordValue);
+            console.log('Confirm Password:', confirmPasswordValue);
+
+            // Hide indicator if confirm password is empty
+            if (confirmPasswordValue === '') {
+                passwordMatchIndicator.style.display = 'none';
+                return;
+            }
+
+            // Show match or no-match indicator
+            if (passwordValue === confirmPasswordValue && passwordValue !== '') {
+                passwordMatchIndicator.textContent = '✓ Passwords match';
+                passwordMatchIndicator.className = 'password-match-indicator match';
+                passwordMatchIndicator.style.display = 'block';
+            } else {
+                passwordMatchIndicator.textContent = '✗ Passwords do not match';
+                passwordMatchIndicator.className = 'password-match-indicator no-match';
+                passwordMatchIndicator.style.display = 'block';
+            }
+        }
+
+        // Check password match when typing in either field
+        password.addEventListener('input', checkPasswordMatch);
+        confirmPassword.addEventListener('input', checkPasswordMatch);
+
+        // Form submission with password match validation
+        form.addEventListener('submit', function(e) {
+            // Check if passwords match before submitting
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                alert('Passwords do not match. Please check and try again.');
+                return;
+            }
+
+            // If passwords match, allow form to submit to server
+            // The form will now submit to /signup route
+        });
+password.addEventListener('input', function () {
+    const value = password.value;
+    const strengthRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+    const strengthMsg = document.getElementById('strengthMsg');
+
+    if (value.length < 8) {
+        strengthMsg.textContent = "Password must be at least 8 characters.";
+    } else if (!strengthRegex.test(value)) {
+        strengthMsg.textContent = "Password must include letters, numbers, and a special character.";
+    } else {
+        strengthMsg.textContent = "";
+    }
+});
+
+
+
+const email = document.getElementById('email');
+const emailError = document.getElementById('emailError');
+
+// Simple email regex
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Show live email error
+email.addEventListener('input', function () {
+  if (!isValidEmail(email.value)) {
+    emailError.textContent = "Please enter a valid email.";
+  } else {
+    emailError.textContent = "";
+  }
+});
+
+
+    </script>
+</body>
+</html>

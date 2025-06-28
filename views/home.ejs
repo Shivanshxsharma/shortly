@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Short URL Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1200px;
+      width: 100%;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container{
+            transition: all 0.4s ease-in-out;
+    }
+
+    .container, .history {
+      flex: 1;
+      min-width: 300px;
+      max-width: 550px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    input[type="url"], select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+    }
+
+    .generate-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f0f4f8;
+      border-left: 4px solid #667eea;
+      border-radius: 10px;
+    }
+
+    .short-url {
+      margin: 10px 0;
+      padding: 10px;
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      color: #667eea;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .copy-btn {
+      background: #48bb78;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .copy-btn:hover {
+      background: #38a169;
+    }
+
+    .copy-btn.copied {
+      background: #667eea;
+    }
+
+    .history h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #2d3748;
+    }
+
+    .history-list {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .history-table th, .history-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #edf2f7;
+      word-break: break-word;
+    }
+    .form-wrapper {
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  max-height: 500px; /* default max-height large enough to fit both form + result */
+}
+
+
+    .history-table th {
+      background-color: #f7fafc;
+      color: #2d3748;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+
+    .history-table td a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .history-table td a:hover {
+      text-decoration: underline;
+    }
+
+    .history-empty {
+      text-align: center;
+      padding: 20px;
+      color: #a0aec0;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+
+    .result {
+  margin-top: 25px;
+  padding: 15px;
+  background: #f0f4f8;
+  border-left: 4px solid #667eea;
+  border-radius: 10px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+.log-out{
+  width: 70px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff1818 0%, #ff8934 100%);
+}
+
+.logout{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="logout">
+    <form action="/log-out" method="get">
+      <button class="log-out">log-out</button>
+    </form>
+  </div>
+  <div class="body">
+<div class="main">
+    <!-- FORM SECTION -->
+    <div class="container">
+      <div class="form-wrapper" id="formWrapper">
+       <h1>Short URL</h1>
+      <form method="post" action="/url" id="urlForm">
+        <label for="originalUrl">Original URL</label>
+        <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required />
+
+        <label for="codeLength">Code Length</label>
+        <select id="codeLength" name="codeLength">
+          <option value="4">4 characters</option>
+          <option value="5">5 characters</option>
+          <option value="6" selected>6 characters</option>
+          <option value="7">7 characters</option>
+          <option value="8">8 characters</option>
+        </select>
+
+        <button type="submit" class="generate-btn">Generate Short URL</button>
+      </form>
+
+      <% if (locals.shorturl) { %>
+      <div class="result">
+        <h3>Your Short URL:</h3>
+        <div class="short-url" id="shortUrlText"><%= shorturl %></div>
+        <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
+        <div id="copyMsg" style="display:none; color:green; margin-top:10px; font-size:0.9rem;">
+          ✅ Copied to clipboard!
+        </div>
+      </div>
+      <% } %>
+      </div>
+     
+    </div>
+
+    <!-- HISTORY SECTION -->
+    <div class="history">
+      <h3>Recent Short URLs</h3>
+      <div class="history-list">
+        <% if (locals.urls&& urls.length > 0) { %>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>S. No</th>
+                <th>ShortID</th>
+                <th>Redirect</th>
+                <th>Clicks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% urls.forEach((url, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= url.shortId %></td>
+                  <td><%= url.redirectURL %></td>
+                  <td><%= url.visithistory.length %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="history-empty">No URLs created yet.</div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+
+  <!-- JS for Copy -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.getElementById("formWrapper");
+
+    if (wrapper) {
+      // collapse first (only needed if you want full effect)
+      wrapper.style.maxHeight = "0px";
+      wrapper.style.overflow = "hidden";
+
+      // then expand it with animation
+      setTimeout(() => {
+        wrapper.style.transition = "max-height 0.5s ease";
+        wrapper.style.maxHeight = wrapper.scrollHeight + "px";
+      }, 50);
+    }
+
+    // Copy functionality
+    const copyBtn = document.getElementById("copyBtn");
+    const shortUrlText = document.getElementById("shortUrlText");
+    if (copyBtn && shortUrlText) {
+      copyBtn.addEventListener("click", () => {
+        const textToCopy = shortUrlText.textContent.trim();
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            copyBtn.textContent = "Copied!";
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.textContent = "📋 Copy Link";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          })
+          .catch(err => {
+            alert("Copy failed: " + err);
+          });
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
+
+
