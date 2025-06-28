@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Short URL Generator</title>
+  <title>Shortly - URL Shortener</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -18,11 +19,54 @@
       display: flex;
       flex-direction: column;
     }
-    .body{
+
+    .header {
+      text-align: center;
+      padding: 20px 10px 0;
+    }
+
+    .header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      color: #e0e0e0;
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    .logout {
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px 25px 10px;
+    }
+
+    .log-out {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff1818 0%, #ff8934 100%);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .log-out:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(255, 100, 100, 0.3);
+    }
+
+    .body {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 90vh;
+      flex-grow: 1;
+      padding: 10px;
     }
 
     .main {
@@ -36,10 +80,6 @@
       align-items: flex-start;
     }
 
-    .container{
-            transition: all 0.4s ease-in-out;
-    }
-
     .container, .history {
       flex: 1;
       min-width: 300px;
@@ -49,11 +89,12 @@
       padding: 30px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease-in-out;
     }
 
-    h1 {
+    .container h1 {
       text-align: center;
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 20px;
       background: linear-gradient(135deg, #667eea, #764ba2);
       -webkit-background-clip: text;
@@ -107,6 +148,7 @@
       background: #f0f4f8;
       border-left: 4px solid #667eea;
       border-radius: 10px;
+      animation: fadeIn 0.6s ease-in-out;
     }
 
     .short-url {
@@ -165,12 +207,6 @@
       border-bottom: 1px solid #edf2f7;
       word-break: break-word;
     }
-    .form-wrapper {
-  overflow: hidden;
-  transition: max-height 0.5s ease;
-  max-height: 500px; /* default max-height large enough to fit both form + result */
-}
-
 
     .history-table th {
       background-color: #f7fafc;
@@ -197,168 +233,164 @@
       font-style: italic;
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 768px) {
       .main {
         flex-direction: column;
         align-items: center;
+        padding: 10px;
+      }
+
+      .logout {
+        justify-content: center;
+      }
+
+      .header h1 {
+        font-size: 2.2rem;
+      }
+
+      .header p {
+        font-size: 1rem;
       }
     }
 
+    @media (max-width: 480px) {
+      .generate-btn, .copy-btn, .log-out {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
 
-    .result {
-  margin-top: 25px;
-  padding: 15px;
-  background: #f0f4f8;
-  border-left: 4px solid #667eea;
-  border-radius: 10px;
-  animation: fadeIn 0.6s ease-in-out;
-}
-.log-out{
-  width: 70px;
-  height: 30px;
-  border-radius: 10px;
-  border: none;
-  font-weight: 900;
-  background: linear-gradient(135deg, #ff1818 0%, #ff8934 100%);
-}
+      .short-url {
+        font-size: 0.9rem;
+      }
 
-.logout{
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
+      .header h1 {
+        font-size: 1.9rem;
+      }
 
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+      .header p {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
+
   <div class="logout">
     <form action="/log-out" method="get">
-      <button class="log-out">log-out</button>
+      <button class="log-out">Log Out</button>
     </form>
   </div>
+
+  <div class="header">
+    <h1>Shortly</h1>
+    <p>Shorten the hassle with Shortly</p>
+  </div>
+
   <div class="body">
-<div class="main">
-    <!-- FORM SECTION -->
-    <div class="container">
-      <div class="form-wrapper" id="formWrapper">
-       <h1>Short URL</h1>
-      <form method="post" action="/url" id="urlForm">
-        <label for="originalUrl">Original URL</label>
-        <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required />
+    <div class="main">
+      <!-- FORM SECTION -->
+      <div class="container">
+        <h1>Short URL</h1>
+        <form method="post" action="/url" id="urlForm">
+          <label for="originalUrl">Original URL</label>
+          <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required />
 
-        <label for="codeLength">Code Length</label>
-        <select id="codeLength" name="codeLength">
-          <option value="4">4 characters</option>
-          <option value="5">5 characters</option>
-          <option value="6" selected>6 characters</option>
-          <option value="7">7 characters</option>
-          <option value="8">8 characters</option>
-        </select>
+          <label for="codeLength">Code Length</label>
+          <select id="codeLength" name="codeLength">
+            <option value="4">4 characters</option>
+            <option value="5">5 characters</option>
+            <option value="6" selected>6 characters</option>
+            <option value="7">7 characters</option>
+            <option value="8">8 characters</option>
+          </select>
 
-        <button type="submit" class="generate-btn">Generate Short URL</button>
-      </form>
+          <button type="submit" class="generate-btn">Generate Short URL</button>
+        </form>
 
-      <% if (locals.shorturl) { %>
-      <div class="result">
-        <h3>Your Short URL:</h3>
-        <div class="short-url" id="shortUrlText"><%= shorturl %></div>
-        <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
-        <div id="copyMsg" style="display:none; color:green; margin-top:10px; font-size:0.9rem;">
-          ✅ Copied to clipboard!
+        <% if (locals.shorturl) { %>
+        <div class="result">
+          <h3>Your Short URL:</h3>
+          <div class="short-url" id="shortUrlText"><%= shorturl %></div>
+          <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
+          <div id="copyMsg" style="display:none; color:green; margin-top:10px; font-size:0.9rem;">
+            ✅ Copied to clipboard!
+          </div>
         </div>
-      </div>
-      <% } %>
-      </div>
-     
-    </div>
-
-    <!-- HISTORY SECTION -->
-    <div class="history">
-      <h3>Recent Short URLs</h3>
-      <div class="history-list">
-        <% if (locals.urls&& urls.length > 0) { %>
-          <table class="history-table">
-            <thead>
-              <tr>
-                <th>S. No</th>
-                <th>ShortID</th>
-                <th>Redirect</th>
-                <th>Clicks</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% urls.forEach((url, index) => { %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= url.shortId %></td>
-                  <td><%= url.redirectURL %></td>
-                  <td><%= url.visithistory.length %></td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        <% } else { %>
-          <div class="history-empty">No URLs created yet.</div>
         <% } %>
       </div>
+
+      <!-- HISTORY SECTION -->
+      <div class="history">
+        <h3>Recent Short URLs</h3>
+        <div class="history-list">
+          <% if (locals.urls && urls.length > 0) { %>
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>S. No</th>
+                  <th>ShortID</th>
+                  <th>Redirect</th>
+                  <th>Clicks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% urls.forEach((url, index) => { %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= url.shortId %></td>
+                    <td><%= url.redirectURL %></td>
+                    <td><%= url.visithistory.length %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <div class="history-empty">No URLs created yet.</div>
+          <% } %>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-  
 
-  <!-- JS for Copy -->
+  <!-- Copy Script -->
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const wrapper = document.getElementById("formWrapper");
+    document.addEventListener("DOMContentLoaded", function () {
+      const copyBtn = document.getElementById("copyBtn");
+      const shortUrlText = document.getElementById("shortUrlText");
 
-    if (wrapper) {
-      // collapse first (only needed if you want full effect)
-      wrapper.style.maxHeight = "0px";
-      wrapper.style.overflow = "hidden";
-
-      // then expand it with animation
-      setTimeout(() => {
-        wrapper.style.transition = "max-height 0.5s ease";
-        wrapper.style.maxHeight = wrapper.scrollHeight + "px";
-      }, 50);
-    }
-
-    // Copy functionality
-    const copyBtn = document.getElementById("copyBtn");
-    const shortUrlText = document.getElementById("shortUrlText");
-    if (copyBtn && shortUrlText) {
-      copyBtn.addEventListener("click", () => {
-        const textToCopy = shortUrlText.textContent.trim();
-        navigator.clipboard.writeText(textToCopy)
-          .then(() => {
-            copyBtn.textContent = "Copied!";
-            copyBtn.classList.add("copied");
-            setTimeout(() => {
-              copyBtn.textContent = "📋 Copy Link";
-              copyBtn.classList.remove("copied");
-            }, 2000);
-          })
-          .catch(err => {
-            alert("Copy failed: " + err);
-          });
-      });
-    }
-  });
-</script>
+      if (copyBtn && shortUrlText) {
+        copyBtn.addEventListener("click", () => {
+          const textToCopy = shortUrlText.textContent.trim();
+          navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+              copyBtn.textContent = "Copied!";
+              copyBtn.classList.add("copied");
+              setTimeout(() => {
+                copyBtn.textContent = "📋 Copy Link";
+                copyBtn.classList.remove("copied");
+              }, 2000);
+            })
+            .catch(err => {
+              alert("Copy failed: " + err);
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
+
 
 
