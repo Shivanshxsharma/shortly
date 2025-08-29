@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shortly - URL Shortener</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,213 +13,241 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      line-height: 1.6;
     }
 
     .header {
       text-align: center;
-      padding: 20px 10px 0;
+      padding: 40px 20px 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #f0f0f0;
     }
 
     .header h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 2.8rem;
-      color: white;
-      margin-bottom: 5px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
 
     .header p {
-      color: #e0e0e0;
-      font-size: 1.1rem;
-      font-style: italic;
+      color: #6b7280;
+      font-size: 1rem;
+      font-weight: 400;
     }
 
     .logout {
       display: flex;
       justify-content: flex-end;
-      padding: 15px 25px 10px;
+      padding: 20px 30px;
+      background: #ffffff;
     }
 
     .log-out {
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: 8px;
-      border: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #fff;
+      border: 1px solid #e5e7eb;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #6b7280;
       cursor: pointer;
-      background: linear-gradient(135deg, #ff1818 0%, #ff8934 100%);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
     .log-out:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(255, 100, 100, 0.3);
+      background: #f9fafb;
+      border-color: #d1d5db;
+      color: #374151;
     }
 
     .body {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       flex-grow: 1;
-      padding: 10px;
+      padding: 40px 20px;
+      background: #fafafa;
     }
 
     .main {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
       max-width: 1200px;
       width: 100%;
-      justify-content: center;
-      align-items: flex-start;
     }
 
     .container, .history {
-      flex: 1;
-      min-width: 300px;
-      max-width: 550px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.4s ease-in-out;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      border: 1px solid #f0f0f0;
     }
 
     .container h1 {
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
+      font-size: 1.75rem;
+      margin-bottom: 28px;
+      color: #1a1a1a;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
 
     label {
       display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #2d3748;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #374151;
+      font-size: 0.875rem;
     }
 
     input[type="url"], select {
       width: 100%;
-      padding: 12px;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 1rem;
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.875rem;
       margin-bottom: 20px;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
     input:focus, select:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
     .generate-btn {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 14px 20px;
+      background: #1a1a1a;
       border: none;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.2s ease;
+      font-family: inherit;
     }
 
     .generate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+      background: #374151;
+      transform: translateY(-1px);
+    }
+
+    .generate-btn:active {
+      transform: translateY(0);
     }
 
     .result {
-      margin-top: 25px;
-      padding: 15px;
-      background: #f0f4f8;
-      border-left: 4px solid #667eea;
-      border-radius: 10px;
-      animation: fadeIn 0.6s ease-in-out;
+      margin-top: 28px;
+      padding: 20px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .result h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 12px;
     }
 
     .short-url {
-      margin: 10px 0;
-      padding: 10px;
-      background: #fff;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      color: #667eea;
-      font-weight: bold;
-      word-break: break-word;
+      margin: 12px 0;
+      padding: 12px 16px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+      color: #1a1a1a;
+      font-weight: 500;
+      word-break: break-all;
+      font-size: 0.875rem;
     }
 
     .copy-btn {
-      background: #48bb78;
-      color: white;
+      background: #3b82f6;
+      color: #ffffff;
       border: none;
       padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      font-size: 0.875rem;
     }
 
     .copy-btn:hover {
-      background: #38a169;
+      background: #2563eb;
     }
 
     .copy-btn.copied {
-      background: #667eea;
+      background: #10b981;
     }
 
     .history h3 {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: #2d3748;
+      font-size: 1.25rem;
+      margin-bottom: 24px;
+      color: #1a1a1a;
+      font-weight: 600;
     }
 
     .history-list {
       max-height: 400px;
       overflow-y: auto;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #e5e7eb;
       border-radius: 8px;
+      background: #ffffff;
     }
 
     .history-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
     }
 
     .history-table th, .history-table td {
-      padding: 12px;
+      padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid #edf2f7;
-      word-break: break-word;
+      border-bottom: 1px solid #f3f4f6;
     }
 
     .history-table th {
-      background-color: #f7fafc;
-      color: #2d3748;
+      background-color: #f9fafb;
+      color: #374151;
       font-weight: 600;
       position: sticky;
       top: 0;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .history-table td {
+      color: #6b7280;
     }
 
     .history-table td a {
-      color: #667eea;
+      color: #3b82f6;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .history-table td a:hover {
@@ -228,15 +256,15 @@
 
     .history-empty {
       text-align: center;
-      padding: 20px;
-      color: #a0aec0;
+      padding: 40px 20px;
+      color: #9ca3af;
       font-style: italic;
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
@@ -246,40 +274,45 @@
 
     @media (max-width: 768px) {
       .main {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px;
       }
 
       .logout {
         justify-content: center;
+        padding: 16px 20px;
+      }
+
+      .header {
+        padding: 24px 20px 16px;
       }
 
       .header h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
 
-      .header p {
-        font-size: 1rem;
+      .body {
+        padding: 24px 20px;
+      }
+
+      .container, .history {
+        padding: 24px;
       }
     }
 
     @media (max-width: 480px) {
-      .generate-btn, .copy-btn, .log-out {
-        font-size: 0.9rem;
-        padding: 10px;
-      }
-
-      .short-url {
-        font-size: 0.9rem;
-      }
-
       .header h1 {
-        font-size: 1.9rem;
+        font-size: 1.75rem;
       }
 
-      .header p {
-        font-size: 0.95rem;
+      .container, .history {
+        padding: 20px;
+      }
+
+      .generate-btn, .copy-btn, .log-out {
+        font-size: 0.875rem;
+        padding: 12px 16px;
       }
     }
   </style>
@@ -323,7 +356,7 @@
           <h3>Your Short URL:</h3>
           <div class="short-url" id="shortUrlText"><%= shorturl %></div>
           <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
-          <div id="copyMsg" style="display:none; color:green; margin-top:10px; font-size:0.9rem;">
+          <div id="copyMsg" style="display:none; color:#10b981; margin-top:10px; font-size:0.875rem;">
             ✅ Copied to clipboard!
           </div>
         </div>
