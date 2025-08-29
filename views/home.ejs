@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shortly - URL Shortener</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -14,30 +14,21 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color: #1a1a1a;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #2d3748;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       line-height: 1.6;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     .header {
       text-align: center;
       padding: 40px 20px 20px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
       position: relative;
-      overflow: hidden;
     }
 
     .header::before {
@@ -46,31 +37,23 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
-      background-size: 200% 100%;
-      animation: rainbowMove 3s linear infinite;
-    }
-
-    @keyframes rainbowMove {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 200% 0%; }
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
     }
 
     .header h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 8px;
       letter-spacing: -0.02em;
-      position: relative;
     }
 
     .header p {
-      color: #6b7280;
+      color: #718096;
       font-size: 1.1rem;
       font-weight: 500;
     }
@@ -79,45 +62,29 @@
       display: flex;
       justify-content: flex-end;
       padding: 20px 30px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(20px);
     }
 
     .log-out {
-      padding: 12px 24px;
-      border-radius: 25px;
-      border: 2px solid #ff6b6b;
-      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      font-weight: 500;
       font-size: 0.875rem;
-      color: #ff6b6b;
+      color: #718096;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.9);
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.2s ease;
       font-family: inherit;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .log-out::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.5s;
-    }
-
-    .log-out:hover::before {
-      left: 100%;
     }
 
     .log-out:hover {
-      background: #ff6b6b;
+      background: #667eea;
       color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+      border-color: #667eea;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
     }
 
     .body {
@@ -131,20 +98,19 @@
     .main {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 32px;
       max-width: 1200px;
       width: 100%;
     }
 
     .container, .history {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
+      border-radius: 20px;
       padding: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       position: relative;
-      overflow: hidden;
     }
 
     .container::before, .history::before {
@@ -153,118 +119,83 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #4ecdc4, #45b7d1, #96ceb4);
+      height: 2px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 20px 20px 0 0;
     }
 
     .container h1 {
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.75rem;
       margin-bottom: 28px;
-      background: linear-gradient(135deg, #4ecdc4, #45b7d1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      color: #2d3748;
+      font-weight: 600;
     }
 
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 600;
-      color: #374151;
+      font-weight: 500;
+      color: #4a5568;
       font-size: 0.875rem;
     }
 
     input[type="url"], select {
       width: 100%;
-      padding: 16px 20px;
-      border: 2px solid #e5e7eb;
-      border-radius: 16px;
+      padding: 14px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
       font-size: 0.875rem;
       margin-bottom: 20px;
       background: rgba(255, 255, 255, 0.8);
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       font-family: inherit;
     }
 
     input:focus, select:focus {
       outline: none;
-      border-color: #4ecdc4;
-      box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.2);
-      transform: translateY(-2px);
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transform: translateY(-1px);
     }
 
     .generate-btn {
       width: 100%;
-      padding: 18px 24px;
-      background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       border: none;
       color: #ffffff;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 16px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       font-family: inherit;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .generate-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .generate-btn:hover::before {
-      left: 100%;
     }
 
     .generate-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(78, 205, 196, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
     }
 
     .generate-btn:active {
-      transform: translateY(-1px);
+      transform: translateY(0);
     }
 
     .result {
       margin-top: 28px;
-      padding: 24px;
-      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-      border: 2px solid #4ecdc4;
-      border-radius: 16px;
-      animation: slideIn 0.4s ease-out;
+      padding: 20px;
+      background: linear-gradient(135deg, #f7fafc, #edf2f7);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      animation: slideIn 0.3s ease-out;
       position: relative;
-      overflow: hidden;
-    }
-
-    .result::before {
-      content: '✨';
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 1.2rem;
-      animation: sparkle 2s ease-in-out infinite;
-    }
-
-    @keyframes sparkle {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.2) rotate(180deg); }
     }
 
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
       }
       to {
         opacity: 1;
@@ -273,89 +204,59 @@
     }
 
     .result h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 16px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 12px;
     }
 
     .short-url {
-      margin: 16px 0;
-      padding: 16px 20px;
+      margin: 12px 0;
+      padding: 14px 18px;
       background: rgba(255, 255, 255, 0.9);
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
       font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-      color: #1a1a1a;
-      font-weight: 600;
+      color: #2d3748;
+      font-weight: 500;
       word-break: break-all;
       font-size: 0.875rem;
-      position: relative;
-    }
-
-    .short-url::before {
-      content: '🔗';
-      position: absolute;
-      left: -30px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.2rem;
     }
 
     .copy-btn {
-      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+      background: linear-gradient(135deg, #48bb78, #38a169);
       color: #ffffff;
       border: none;
-      padding: 14px 28px;
-      border-radius: 25px;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      transition: all 0.2s ease;
       font-family: inherit;
       font-size: 0.875rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .copy-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .copy-btn:hover::before {
-      left: 100%;
     }
 
     .copy-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
     }
 
     .copy-btn.copied {
-      background: linear-gradient(135deg, #10b981, #34d399);
+      background: linear-gradient(135deg, #667eea, #764ba2);
     }
 
     .history h3 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       margin-bottom: 24px;
-      background: linear-gradient(135deg, #96ceb4, #feca57);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
+      color: #2d3748;
+      font-weight: 600;
     }
 
     .history-list {
       max-height: 400px;
       overflow-y: auto;
-      border: 2px solid #e5e7eb;
-      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.8);
     }
 
@@ -366,15 +267,15 @@
     }
 
     .history-table th, .history-table td {
-      padding: 16px 20px;
+      padding: 14px 18px;
       text-align: left;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid #f7fafc;
     }
 
     .history-table th {
-      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-      color: #374151;
-      font-weight: 700;
+      background: linear-gradient(135deg, #f7fafc, #edf2f7);
+      color: #4a5568;
+      font-weight: 600;
       position: sticky;
       top: 0;
       font-size: 0.75rem;
@@ -383,47 +284,33 @@
     }
 
     .history-table td {
-      color: #6b7280;
+      color: #718096;
       transition: all 0.2s ease;
     }
 
     .history-table tr:hover td {
-      background: rgba(78, 205, 196, 0.1);
-      color: #1a1a1a;
+      background: rgba(102, 126, 234, 0.05);
+      color: #2d3748;
     }
 
     .history-table td a {
-      color: #4ecdc4;
+      color: #667eea;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
       transition: all 0.2s ease;
     }
 
     .history-table td a:hover {
-      color: #45b7d1;
+      color: #764ba2;
       text-decoration: underline;
     }
 
     .history-empty {
       text-align: center;
       padding: 40px 20px;
-      color: #9ca3af;
+      color: #a0aec0;
       font-style: italic;
-      font-size: 1.1rem;
-    }
-
-    .history-empty::before {
-      content: '🎯';
-      display: block;
-      font-size: 3rem;
-      margin-bottom: 16px;
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+      font-size: 1rem;
     }
 
     @media (max-width: 768px) {
@@ -443,7 +330,7 @@
       }
 
       .header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
       }
 
       .body {
@@ -457,7 +344,7 @@
 
     @media (max-width: 480px) {
       .header h1 {
-        font-size: 2rem;
+        font-size: 1.9rem;
       }
 
       .container, .history {
@@ -466,7 +353,7 @@
 
       .generate-btn, .copy-btn, .log-out {
         font-size: 0.875rem;
-        padding: 14px 20px;
+        padding: 12px 16px;
       }
     }
   </style>
@@ -475,20 +362,20 @@
 
   <div class="logout">
     <form action="/log-out" method="get">
-      <button class="log-out">🚪 Log Out</button>
+      <button class="log-out">Log Out</button>
     </form>
   </div>
 
   <div class="header">
     <h1>Shortly</h1>
-    <p>Shorten the hassle with Shortly ✨</p>
+    <p>Shorten the hassle with Shortly</p>
   </div>
 
   <div class="body">
     <div class="main">
       <!-- FORM SECTION -->
       <div class="container">
-        <h1>🚀 Short URL</h1>
+        <h1>Short URL</h1>
         <form method="post" action="/url" id="urlForm">
           <label for="originalUrl">Original URL</label>
           <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required />
@@ -502,15 +389,15 @@
             <option value="8">8 characters</option>
           </select>
 
-          <button type="submit" class="generate-btn">🎯 Generate Short URL</button>
+          <button type="submit" class="generate-btn">Generate Short URL</button>
         </form>
 
         <% if (locals.shorturl) { %>
         <div class="result">
           <h3>Your Short URL:</h3>
           <div class="short-url" id="shortUrlText"><%= shorturl %></div>
-          <button class="copy-btn" id="copyBtn">📋 Copy Link</button>
-          <div id="copyMsg" style="display:none; color:#10b981; margin-top:16px; font-size:0.875rem; font-weight:600;">
+          <button class="copy-btn" id="copyBtn">Copy Link</button>
+          <div id="copyMsg" style="display:none; color:#48bb78; margin-top:12px; font-size:0.875rem; font-weight:500;">
             ✅ Copied to clipboard!
           </div>
         </div>
@@ -519,7 +406,7 @@
 
       <!-- HISTORY SECTION -->
       <div class="history">
-        <h3>📚 Recent Short URLs</h3>
+        <h3>Recent Short URLs</h3>
         <div class="history-list">
           <% if (locals.urls && urls.length > 0) { %>
             <table class="history-table">
@@ -561,10 +448,10 @@
           const textToCopy = shortUrlText.textContent.trim();
           navigator.clipboard.writeText(textToCopy)
             .then(() => {
-              copyBtn.textContent = "🎉 Copied!";
+              copyBtn.textContent = "Copied!";
               copyBtn.classList.add("copied");
               setTimeout(() => {
-                copyBtn.textContent = "📋 Copy Link";
+                copyBtn.textContent = "Copy Link";
                 copyBtn.classList.remove("copied");
               }, 2000);
             })
